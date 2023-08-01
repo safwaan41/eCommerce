@@ -75,8 +75,11 @@ router.delete('/:id', async (req, res) => {
       res.status(400).json({ message: 'No Category found with that ID!' });
       return;
     }
-
-    res.status(200).json(categoryData);
+    const category = await Category.findAll({
+      include: [{ model: Product }],
+    })
+    res.status(200).json(category);
+    
   } catch (err) {
     res.status(500).json(err);
   }
